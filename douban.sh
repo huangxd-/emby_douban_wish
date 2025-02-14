@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 豆瓣用户id
-uid="填写你的豆瓣user_id"
+uid=57139497
 # 防止请求太频繁被豆瓣ban了ip，设置请求间隔
 interval=60
 # 电影目录
