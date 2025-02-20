@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # 配置信息
-server_url="http://{emby地址}:{端口号}/emby"   # emby-server域名和端口号
-api_key="填写你的emby api key"                 # emby-server上生成的API密钥
-uid="填写你的豆瓣user_id"                      # 豆瓣用户id
+server_url="http://{emby地址}:{端口号}/emby"    # emby-server域名和端口号
+api_key="填写你的emby api key"                  # emby-server上生成的API密钥
+uid="填写你的豆瓣user_id"                       # 豆瓣用户id
 interval=60                                    # 防止请求太频繁被豆瓣ban了ip，设置请求间隔
 library_refresh_time=120                       # 触发媒体库刷新之后的等待时间
 movies_path=/home/emby/movies                  # 电影目录
@@ -56,8 +56,8 @@ get_wish_list() {
     # 获取第一页内容
     page_content=$(get_page_content "$wish_url"0)
     if echo "$page_content" | grep -q "nginx"; then
-		echo "变量中包含nginx字符串，脚本停止执行"
-		exit 1
+        echo "变量中包含nginx字符串，脚本停止执行"
+        exit 1
     fi
 
     # 提取data-total-page的值
@@ -175,8 +175,7 @@ get_items_without_metadata() {
         # 提取每个 item
         items=$(echo "$response" | grep -oP '\{.*?\}')
         while IFS= read -r item; do
-            #name=$(echo "$item" | grep -oP '"Name": *"[^"]+"' | cut -d'"' -f4 | sed 's/ (.*)//')
-	        name=$(echo "$item" | grep -oP '"Name": *"[^"]+"' | cut -d'"' -f4)
+            name=$(echo "$item" | grep -oP '"Name": *"[^"]+"' | cut -d'"' -f4)
             item_id=$(echo "$item" | grep -oP '"Id": *"[^"]+"' | cut -d'"' -f4)
             provider_ids=$(echo "$item" | grep -oP '"ProviderIds": *\{.*?\}' | grep -oP '"Imdb": *"[^"]+"')
             if [ -n "$item_id" ] && [ -z "$provider_ids" ]; then
