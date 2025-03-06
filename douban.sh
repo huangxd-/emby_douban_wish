@@ -77,12 +77,12 @@ get_wish_list() {
         response=$(get_page_content "$wish_url$start")
 
         # 使用 sed 提取所有 item 内容
-        items=$(echo "$response" | sed -n '/<div class="info"/,/<\/div>/p')
+        items=$(echo "$response" | sed -n '/<div class="grid-view">/,/<div class="paginator">/p')
 
         # 提取标题和年份以及链接
         titles=$(echo "$items" | grep -oP '<em>\K[^<]*(?=</em>)' | sed 's/\///g' | tr -s ' ')
         years=$(echo "$items" | grep -oP '<li class="intro">\K\d{4}(?=-\d{2}-\d{2})')
-        links=$(echo "$items" | grep -oP '<a href="\K[^"]*(?=" class="">)')
+        links=$(echo "$items" | grep -oP '<a href="\K[^"]*')
 
         # 将标题和年份以及链接转换为数组
         mapfile -t titles_array <<< "$titles"
